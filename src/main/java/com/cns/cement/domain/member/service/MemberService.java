@@ -6,11 +6,14 @@ import com.cns.cement.domain.member.dto.MemberResponse;
 import com.cns.cement.domain.member.dto.ModifyMemberRequest;
 import com.cns.cement.domain.member.entity.Member;
 import com.cns.cement.domain.member.repository.MemberRepository;
+import com.cns.cement.global.util.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,8 +21,11 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberResponse addMember(CreateMemberRequest request) {
+    public MemberResponse addMember(CreateMemberRequest request, MultipartFile file) throws IOException {
         Member saveMember = memberRepository.save(request.toEntity());
+        if (!file.isEmpty()) {
+            saveMember.setProfile_img(ImageUtils.compressImage(file.getBytes()));
+        }
         return new MemberResponse(saveMember.getEmail(),
                                         saveMember.getName(),
                                         saveMember.getPhone(),
@@ -28,25 +34,21 @@ public class MemberService {
     }
 
     public List<MemberResponse> searchFilterMember(String filter, String value) {
-        if (filter.equals("email")) {
-            return memberRepository.findByEmailContaining(value).stream()
+        return switch (filter) {
+            case "email" -> memberRepository.findByEmailContaining(value).stream()
                     .map(MemberResponse::of)
                     .toList();
-        } else if (filter.equals("name")) {
-            return memberRepository.findByNameContaining(value).stream()
+            case "name" -> memberRepository.findByNameContaining(value).stream()
                     .map(MemberResponse::of)
                     .toList();
-        } else if (filter.equals("phone")) {
-            return memberRepository.findByPhoneContaining(value).stream()
+            case "phone" -> memberRepository.findByPhoneContaining(value).stream()
                     .map(MemberResponse::of)
                     .toList();
-        } else if (filter.equals("department")) {
-            return memberRepository.findByDepartmentContaining(value).stream()
+            case "department" -> memberRepository.findByDepartmentContaining(value).stream()
                     .map(MemberResponse::of)
                     .toList();
-        } else {
-            return null;
-        }
+            default -> null;
+        };
     }
 
     public List<MemberResponse> memberList() {
