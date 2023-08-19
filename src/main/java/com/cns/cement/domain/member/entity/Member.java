@@ -27,7 +27,6 @@ public class Member {
 
     @Column(unique = true)
     private String email;
-    private String password;
     private String name;
     private String phone;
     private String department;
@@ -44,9 +43,8 @@ public class Member {
 
 
 
-    private Member(String email, String password, String name, String phone, String department, String motto) {
+    private Member(String email, String name, String phone, String department, String motto) {
         this.email = email;
-        this.password = password;
         this.name = name;
         this.phone = phone;
         this.department = department;
@@ -57,11 +55,10 @@ public class Member {
 
     @Builder
     public static Member of(String email,
-                            String password,
                             String name,
                             String phone,
                             String department,
                             String motto) {
-        return new Member(email, password, name, phone, department, motto);
+        return new Member(email, name, phone, department, motto);
     }
 }
