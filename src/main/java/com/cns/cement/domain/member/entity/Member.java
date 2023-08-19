@@ -32,6 +32,10 @@ public class Member {
     private String department;
     @Setter
     private String motto;
+
+    private String file_name;
+    private Long file_size;
+
     @Enumerated(EnumType.STRING)
     private Authority role;
     //    private String img;

@@ -6,14 +6,16 @@ import com.cns.cement.domain.member.dto.MemberResponse;
 import com.cns.cement.domain.member.dto.ModifyMemberRequest;
 import com.cns.cement.domain.member.entity.Member;
 import com.cns.cement.domain.member.repository.MemberRepository;
-import com.cns.cement.global.util.ImageUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.impl.FileUploadIOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -21,11 +23,18 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberResponse addMember(CreateMemberRequest request, MultipartFile file) throws IOException {
+    public void imgSave(MultipartFile imgFile) throws IOException {
+        String saveFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
+        String saveUrl = System.getProperty("user.dir") + "/src/main/resources/profile_img";
+
+        final File file = new File(saveUrl, saveFileName);
+        imgFile.transferTo(file);
+    }
+
+    public MemberResponse addMember(CreateMemberRequest request) {
+
         Member saveMember = memberRepository.save(request.toEntity());
-        if (!file.isEmpty()) {
-            saveMember.setProfile_img(ImageUtils.compressImage(file.getBytes()));
-        }
+
         return new MemberResponse(saveMember.getEmail(),
                                         saveMember.getName(),
                                         saveMember.getPhone(),

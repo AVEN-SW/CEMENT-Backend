@@ -17,6 +17,7 @@ public class CreateMemberRequest {
     String department;
     String motto;
 
+
     public Member toEntity() {
         return Member.of(email, name, phone, department, motto);
     }
