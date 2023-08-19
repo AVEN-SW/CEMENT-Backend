@@ -1,10 +1,7 @@
 package com.cns.cement.domain.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,9 +24,13 @@ public class Member {
 
     @Column(unique = true)
     private String email;
+    @Setter
     private String name;
+    @Setter
     private String phone;
+    @Setter
     private String department;
+    @Setter
     private String motto;
     @Enumerated(EnumType.STRING)
     private Authority role;
