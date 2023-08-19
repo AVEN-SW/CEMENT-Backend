@@ -1,6 +1,7 @@
 package com.cns.cement.domain.member.service;
 
 import com.cns.cement.domain.member.dto.CreateMemberRequest;
+import com.cns.cement.domain.member.dto.DeleteMemberRequest;
 import com.cns.cement.domain.member.dto.MemberResponse;
 import com.cns.cement.domain.member.dto.ModifyMemberRequest;
 import com.cns.cement.domain.member.entity.Member;
@@ -72,5 +73,9 @@ public class MemberService {
         }
 
         return MemberResponse.of(memberRepository.save(findMember));
+    }
+
+    public void deleteMember(DeleteMemberRequest request) {
+        memberRepository.deleteById(request.id());
     }
 }

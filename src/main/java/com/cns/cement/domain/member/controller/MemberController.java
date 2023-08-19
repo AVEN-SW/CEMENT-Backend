@@ -1,10 +1,6 @@
 package com.cns.cement.domain.member.controller;
 
-import com.cns.cement.domain.member.dto.CreateMemberRequest;
-import com.cns.cement.domain.member.dto.MemberResponse;
-import com.cns.cement.domain.member.dto.ModifyMemberRequest;
-import com.cns.cement.domain.member.dto.SearchMemberRequest;
-import com.cns.cement.domain.member.entity.Member;
+import com.cns.cement.domain.member.dto.*;
 import com.cns.cement.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +35,11 @@ public class MemberController {
     @PutMapping("/members")
     public MemberResponse modifyMember(@RequestBody ModifyMemberRequest request) {
         return memberService.modifyMember(request);
+    }
+
+    // 멤버 정보 삭제
+    @DeleteMapping("/members")
+    public void deleteMember(@RequestBody DeleteMemberRequest request) {
+        memberService.deleteMember(request);
     }
 }
