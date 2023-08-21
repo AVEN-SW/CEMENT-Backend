@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/members")
+@RequestMapping("/member")
 @RestController
 public class MemberController {
 
