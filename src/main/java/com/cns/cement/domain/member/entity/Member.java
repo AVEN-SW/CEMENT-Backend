@@ -34,7 +34,6 @@ public class Member {
     private String motto;
 
     private String file_name;
-    private Long file_size;
 
     @Enumerated(EnumType.STRING)
     private Authority role;
@@ -48,12 +47,13 @@ public class Member {
 
 
 
-    private Member(String email, String name, String phone, String department, String motto) {
+    private Member(String email, String name, String phone, String department, String motto, String file_name) {
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.department = department;
         this.motto = motto;
+        this.file_name = file_name;
         this.role = Authority.ROLE_MEMBER;
         this.status = MemberStatus.Suspended;
     }
@@ -63,7 +63,8 @@ public class Member {
                             String name,
                             String phone,
                             String department,
-                            String motto) {
-        return new Member(email, name, phone, department, motto);
+                            String motto,
+                            String file_name) {
+        return new Member(email, name, phone, department, motto, file_name);
     }
 }

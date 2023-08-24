@@ -6,9 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ModifyMemberRequest {
-    Long id;
-    String name;
-    String phone;
-    String department;
-    String motto;
+    private Long id;
+    private String name;
+    private String phone;
+    private String department;
+    private String motto;
 }

@@ -10,17 +10,20 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class MemberResponse {
-    String email;
-    String name;
-    String phone;
-    String department;
-    String motto;
+    private String email;
+    private String name;
+    private String phone;
+    private String department;
+    private String motto;
+    private String file_name;
+
 
     public static MemberResponse of(Member member) {
         return new MemberResponse(member.getEmail(),
                 member.getName(),
                 member.getPhone(),
                 member.getDepartment(),
-                member.getMotto());
+                member.getMotto(),
+                member.getFile_name());
     }
 }

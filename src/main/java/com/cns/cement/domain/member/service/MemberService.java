@@ -23,23 +23,26 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void imgSave(MultipartFile imgFile) throws IOException {
+    public String imgSave(MultipartFile imgFile) throws IOException {
         String saveFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
         String saveUrl = System.getProperty("user.dir") + "/src/main/resources/profile_img";
 
         final File file = new File(saveUrl, saveFileName);
         imgFile.transferTo(file);
+        return saveFileName;
     }
 
-    public MemberResponse addMember(CreateMemberRequest request) {
-
+    public MemberResponse addMember(CreateMemberRequest request, MultipartFile file) throws IOException {
+        String file_name = imgSave(file);
+        request.setFile_name(file_name);
         Member saveMember = memberRepository.save(request.toEntity());
 
         return new MemberResponse(saveMember.getEmail(),
                                         saveMember.getName(),
                                         saveMember.getPhone(),
                                         saveMember.getDepartment(),
-                                        saveMember.getMotto());
+                                        saveMember.getMotto(),
+                                        saveMember.getFile_name());
     }
 
     public List<MemberResponse> searchFilterMember(String filter, String value) {

@@ -2,6 +2,7 @@ package com.cns.cement.domain.member.dto;
 
 import com.cns.cement.domain.member.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.Value;
 
 import java.io.Serializable;
@@ -11,14 +12,16 @@ import java.io.Serializable;
  */
 @Getter
 public class CreateMemberRequest {
-    String email;
-    String name;
-    String phone;
-    String department;
-    String motto;
+    private String email;
+    private String name;
+    private String phone;
+    private String department;
+    private String motto;
+    @Setter
+    private String file_name;
 
 
     public Member toEntity() {
-        return Member.of(email, name, phone, department, motto);
+        return Member.of(email, name, phone, department, motto, file_name);
     }
 }
