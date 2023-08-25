@@ -1,6 +1,7 @@
 package com.cns.cement.domain.member.controller;
 
 import com.cns.cement.domain.member.dto.*;
+import com.cns.cement.domain.member.entity.Member;
 import com.cns.cement.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -8,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,14 +38,15 @@ public class MemberController {
 
     // 이미지 조회
     @GetMapping("/img")
-    public ResponseEntity<Resource> imgSearch() throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/profile_img/" + "df55b025-dfbb-4c7d-a72d-a326b94bd796_00721279bfe3d8893fc011083b9eb1ca.jpg");
+    public ResponseEntity<Resource> imgSearch(Authentication authentication) throws IOException {
+        Member member = (Member) authentication.getPrincipal();
+        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/profile_img/" + "df55b025-dfbb-4c7d-a72d-a326b94bd796_00721279bfe3d8893fc011083b9eb1ca.jpg");
         String contentType = Files.probeContentType(path);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDisposition(
                 ContentDisposition.builder("attachment")
-                        .filename("df55b025-dfbb-4c7d-a72d-a326b94bd796_00721279bfe3d8893fc011083b9eb1ca.jpg", StandardCharsets.UTF_8)
+                        .filename(member.getName() + ".jpg", StandardCharsets.UTF_8)
                         .build());
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 

@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Getter
 public class CreateMemberRequest {
     private String email;
+    private String password;
     private String name;
     private String phone;
     private String department;
@@ -22,6 +23,6 @@ public class CreateMemberRequest {
 
 
     public Member toEntity() {
-        return Member.of(email, name, phone, department, motto, file_name);
+        return Member.of(email, password, name, phone, department, motto, file_name);
     }
 }

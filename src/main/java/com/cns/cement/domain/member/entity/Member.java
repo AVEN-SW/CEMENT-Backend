@@ -5,6 +5,9 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -15,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
 @Entity
-public class Member {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -24,6 +27,7 @@ public class Member {
 
     @Column(unique = true)
     private String email;
+    private String password;
     @Setter
     private String name;
     @Setter
@@ -47,8 +51,9 @@ public class Member {
 
 
 
-    private Member(String email, String name, String phone, String department, String motto, String file_name) {
+    private Member(String email, String password, String name, String phone, String department, String motto, String file_name) {
         this.email = email;
+        this.password = password;
         this.name = name;
         this.phone = phone;
         this.department = department;
@@ -60,11 +65,47 @@ public class Member {
 
     @Builder
     public static Member of(String email,
+                            String password,
                             String name,
                             String phone,
                             String department,
                             String motto,
                             String file_name) {
-        return new Member(email, name, phone, department, motto, file_name);
+        return new Member(email, password, name, phone, department, motto, file_name);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.toString()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
