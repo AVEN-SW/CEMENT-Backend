@@ -28,7 +28,7 @@
               <div class="card-body px-5 py-5">
                 <h4 class="card-title">멤버 계정 신청</h4>
                 <p class="card-description"> 신청 후 이메일로 확인 메일이 발송됩니다 </p>
-                <form class="forms-sample" action="/register" method="POST">
+                <form class="forms-sample" action="/register" method="POST" enctype="multipart/form-data">
                   <div class="form-group">
                     <label for="exampleInputEmail1">이메일</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="이메일" name="email" required>
@@ -51,7 +51,7 @@
                   </div>
                   <div class="form-group">
                     <label>프로필 사진</label>
-                    <input type="file" name="img[]" class="file-upload-default">
+                    <input type="file" name="profile_image" class="file-upload-default">
                     <div class="input-group col-xs-12">
                       <input type="text" class="form-control file-upload-info" disabled placeholder="이미지 업로드" required>
                       <span class="input-group-append">

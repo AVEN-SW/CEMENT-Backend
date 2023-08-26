@@ -25,7 +25,7 @@ public class MemberService {
 
     public String imgSave(MultipartFile imgFile) throws IOException {
         String saveFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
-        String saveUrl = System.getProperty("user.dir") + "/src/main/resources/profile_img";
+        String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img/member";
 
         final File file = new File(saveUrl, saveFileName);
         imgFile.transferTo(file);

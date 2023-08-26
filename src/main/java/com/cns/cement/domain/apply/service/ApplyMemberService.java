@@ -8,12 +8,15 @@ import com.cns.cement.domain.member.entity.Member;
 import com.cns.cement.domain.member.repository.MemberRepository;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +36,13 @@ public class ApplyMemberService {
             String subject = "[CEMENT] " + request.getUsername() + "님의 멤버 계정 신청";
 
             StringBuilder body = new StringBuilder();
-            body.append("<html> <body><h1>CEMENT " + request.getUsername() + "님의 멤버 계정 신청이 정상적으로 진행되었습니다. </h1>");
+            if (emailValid) {
+                // 중복 X
+                body.append("<html> <body><h1>CEMENT " + request.getUsername() + "님의 멤버 계정 신청이 정상적으로 진행되었습니다. </h1>");
+            } else {
+                // 중복된 경우
+                body.append("<html> <body><h1>CEMENT " + request.getUsername() + "님의 멤버 계정 신청이 거부되었습니다. </h1>");
+            }
             body.append("<hr>");
             body.append("<h2>신청 정보</h2><br>");
             body.append("<h3>");
@@ -53,7 +62,7 @@ public class ApplyMemberService {
             if (emailValid) {
                 body.append("<h4>계정이 승인되면 다시 메일로 알려드리겠습니다. 감사합니다!</h4></body></html>");
             } else {
-                body.append("<h4 style='color: red'>이메일이 이미 사용중입니다. 다른 이메일로 다시 신청해주세요.</h4></body></html>");
+                body.append("<h4 style='color: red'>이미 신청된 이메일이거나 사용중인 이메일입니다. 다른 이메일로 다시 신청해주세요.</h4></body></html>");
             }
 
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -76,6 +85,19 @@ public class ApplyMemberService {
         // 비밀번호 암호화 후 저장
         request.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
 
+        // 이미지 저장
+        try {
+            String saveFileName = UUID.randomUUID() + "_" + request.getProfile_image().getOriginalFilename();
+            String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img/apply_member";
+
+            final File file = new File(saveUrl, saveFileName);
+            request.getProfile_image().transferTo(file);
+            request.setFile_name(saveFileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         ApplyMember applyMember = applyMemberRepository.save(request.toEntity());
         return ApplyMemberResponse.builder()
                 .email(applyMember.getEmail())
@@ -96,10 +118,10 @@ public class ApplyMemberService {
         }
 
         // 등록된 멤버 중에서 중복 확인
-        Optional<Member> registeredMember = memberRepository.findByEmail(email);
-        if (registeredMember.isPresent()) {
-            return false;
-        }
+//        Optional<Member> registeredMember = memberRepository.findByEmail(email);
+//        if (registeredMember.isPresent()) {
+//            return false;
+//        }
 
         return true;
     }
