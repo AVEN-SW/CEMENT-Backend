@@ -13,7 +13,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -38,12 +37,12 @@ public class ApplyMemberService {
             body.append("<hr>");
             body.append("<h2>신청 정보</h2><br>");
             body.append("<h3>");
-            if (!emailValid) {
-                // 중복된 경우
-                body.append("<div style='color: red'>이메일: " + request.getEmail() + " [중복된 이메일입니다. 다시 신청해주세요.]</div>");
-            } else {
+            if (emailValid) {
                 // 중복 X
                 body.append("이메일: " + request.getEmail());
+            } else {
+                // 중복된 경우
+                body.append("<div style='color: red'>이메일: " + request.getEmail() + " [중복된 이메일입니다]</div>");
             }
             body.append("<br>이름: " + request.getUsername());
             body.append("<br>전화번호: " + request.getPhone());
@@ -51,7 +50,11 @@ public class ApplyMemberService {
             body.append("<br>나이: " + request.getAge().toString());
             body.append("</h3>");
             body.append("<hr>");
-            body.append("<h4>계정이 승인되면 다시 메일로 알려드리겠습니다. 감사합니다!</h4></body></html>");
+            if (emailValid) {
+                body.append("<h4>계정이 승인되면 다시 메일로 알려드리겠습니다. 감사합니다!</h4></body></html>");
+            } else {
+                body.append("<h4 style='color: red'>이메일이 이미 사용중입니다. 다른 이메일로 다시 신청해주세요.</h4></body></html>");
+            }
 
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");

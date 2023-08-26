@@ -2,17 +2,9 @@ package com.cns.cement.domain.apply.controller;
 
 import com.cns.cement.domain.apply.dto.ApplyMemberRequest;
 import com.cns.cement.domain.apply.service.ApplyMemberService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.io.File;
-import java.io.UnsupportedEncodingException;
 
 @RequiredArgsConstructor
 @Controller
