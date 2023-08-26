@@ -46,7 +46,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputConfirmPassword1">전화번호</label>
-                    <input type="tel" class="form-control" id="examplePhone1" placeholder="예: 010-1234-5678" name="phone" required>
+                    <input type="text" class="form-control" id="examplePhone1" placeholder="예: 010-1234-5678" name="phone" required>
                   </div>
                   <div class="form-group">
                     <label>프로필 사진</label>
@@ -79,7 +79,7 @@
                     <label for="exampleAge1">나이</label>
                     <input type="number" class="form-control" id="exampleAge1" min="15" max="90" value=20 name="age">
                   </div>
-                  <button type="submit" class="btn btn-primary mr-2">신청하기</button>
+                  <button type="submit" class="btn btn-primary mr-2" id="submit">신청하기</button>
                   <a class="btn btn-dark" href="/login">취소</a>
                 </form>
               </div>
@@ -105,6 +105,39 @@
     <script src="/js/settings.js"></script>
     <script src="/js/todolist.js"></script>
     <script src="/js/file-upload.js"></script>
+    <script>
+      var password = document.getElementById("exampleInputPassword1")
+              ,confirm_password = document.getElementById("exampleInputConfirmPassword1");
+
+      password.onchange = validatePassword;
+      confirm_password.onkeyup = validatePassword;
+
+      function validatePassword(){
+        if(password.value != confirm_password.value) { // 만일 두 인풋 필드값이 같지 않을 경우
+          // setCustomValidity의 값을 지정해 무조건 경고 표시가 나게 하고
+          confirm_password.setCustomValidity("암호가 일치하지 않습니다");
+        }
+        else { // 만일 두 인풋 필드값이 같을 경우
+          // 오류가 없으면 메시지를 빈 문자열로 설정해야한다. 오류 메시지가 비어 있지 않은 한 양식은 유효성 검사를 통과하지 않고 제출되지 않는다.
+          // 따라서 빈값을 주어 submit 처리되게 한다
+          confirm_password.setCustomValidity('');
+        }
+
+      }
+
+      let phone = document.getElementById("examplePhone1");
+      let phoneRule = /^(01[016789]{1})-[0-9]{4}-[0-9]{4}$/;
+
+      phone.onkeyup = isHpFormat;
+      function isHpFormat(){
+        if(!phoneRule.test(phone.value)){
+          phone.setCustomValidity("전화번호 형식이 유효하지 않습니다");
+        }
+        else {
+          phone.setCustomValidity('')
+        }
+      }
+    </script>
     <!-- endinject -->
   </body>
 </html>
