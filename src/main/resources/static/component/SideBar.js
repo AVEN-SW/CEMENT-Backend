@@ -2,7 +2,11 @@ class SideBar extends HTMLElement {
     constructor() {
         super();
     }
+
     connectedCallback() {
+        let username = this.getAttribute("name");
+        let file_name = this.getAttribute("value");
+        let department = this.getAttribute("alt");
         this.innerHTML = `<nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a class="sidebar-brand brand-logo" href="/"><img src="/images/logo.png" alt="logo" /></a>
@@ -13,12 +17,12 @@ class SideBar extends HTMLElement {
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="/images/faces/jth.jpg" alt="">
+                  <img class="img-xs rounded-circle " src="/profile_img/member/${file_name}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">장태희</h5>
-                  <span>CNS MEMBER</span>
+                  <h5 class="mb-0 font-weight-normal" id="sideUsername"> ${username} </h5>
+                  <span id="sideDepartment">${department}</span>
                 </div>
               </div>
               <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>

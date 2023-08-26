@@ -1,5 +1,7 @@
 class HeaderBar extends HTMLElement {
     connectedCallback() {
+        let username = this.getAttribute("name");
+        let file_name = this.getAttribute("value");
         this.innerHTML = `        <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
             <a class="navbar-brand brand-logo-mini" href="/"><img src="/images/logo-mini.svg" alt="logo" /></a>
@@ -151,8 +153,8 @@ class HeaderBar extends HTMLElement {
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="/images/faces/jth.jpg" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">장태희</p>
+                    <img class="img-xs rounded-circle" src="/profile_img/member/${file_name}" alt="">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name" id="headerUsername"> ${username} </p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>

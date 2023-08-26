@@ -29,12 +29,11 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
 
-      <side-bar></side-bar>
-
+      <side-bar th:name="${member.name}" th:value="${member.file_name}" th:alt="${member.department}"></side-bar>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
-        <header-bar></header-bar>
+        <header-bar th:name="${member.name}" th:value="${member.file_name}"></header-bar>
 
         <!-- partial -->
         <div class="main-panel">
