@@ -118,10 +118,10 @@ public class ApplyMemberService {
         }
 
         // 등록된 멤버 중에서 중복 확인
-//        Optional<Member> registeredMember = memberRepository.findByEmail(email);
-//        if (registeredMember.isPresent()) {
-//            return false;
-//        }
+        Optional<Member> registeredMember = memberRepository.findByEmail(email);
+        if (registeredMember.isPresent()) {
+            return false;
+        }
 
         return true;
     }
