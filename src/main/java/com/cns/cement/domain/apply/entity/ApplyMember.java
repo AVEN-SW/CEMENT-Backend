@@ -28,6 +28,8 @@ public class ApplyMember {
     private String name;
     private String password;
     private String phone;
+    private String gender;
+    private Integer age;
     private String file_name;
 
     @Enumerated(EnumType.STRING)
@@ -41,13 +43,18 @@ public class ApplyMember {
                         String name,
                         String password,
                         String phone,
+                        String gender,
+                        Integer age,
                         String file_name) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.phone = phone;
+        this.gender = gender;
+        this.age = age;
         this.file_name = file_name;
         this.status = ApplyStatus.PENDING;
+        this.applyAt = LocalDateTime.now();
     }
 
     @Builder
@@ -55,7 +62,9 @@ public class ApplyMember {
                                  String name,
                                  String password,
                                  String phone,
+                                 String gender,
+                                 Integer age,
                                  String file_name) {
-        return new ApplyMember(email, name, password, phone, file_name);
+        return new ApplyMember(email, name, password, phone, gender, age, file_name);
     }
 }
