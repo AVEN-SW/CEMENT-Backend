@@ -18,11 +18,13 @@ public class InstaTaged {
 
     private String writer;
     private String created_At;
-
+    private String file_url;
 
     @Builder
-    public InstaTaged(String writer){
+    public InstaTaged(String writer, String file_url, String created_At){
         this.writer = writer;
+        this.file_url = file_url;
+        this.created_At = created_At;
     }
 
 }

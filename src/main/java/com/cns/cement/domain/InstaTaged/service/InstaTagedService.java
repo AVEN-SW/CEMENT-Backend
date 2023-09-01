@@ -10,4 +10,6 @@ import org.springframework.stereotype.Service;
 public class InstaTagedService {
 
     private final InstaTagedRepository instaTagedRepository;
+
+
 }
