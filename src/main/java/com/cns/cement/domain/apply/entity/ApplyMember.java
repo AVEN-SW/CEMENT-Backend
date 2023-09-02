@@ -67,4 +67,8 @@ public class ApplyMember {
                                  String file_name) {
         return new ApplyMember(email, name, password, phone, gender, age, file_name);
     }
+
+    public Member toEntity() {
+        return Member.of(email, password, name, phone, null, null, file_name);
+    }
 }
