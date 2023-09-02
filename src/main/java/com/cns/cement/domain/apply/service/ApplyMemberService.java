@@ -146,20 +146,21 @@ public class ApplyMemberService {
 
         // 지원자 정보에서 삭제
         // TODO: 지원자 데이터에서 승인, 삭제 기준으로 delete column 추가 예정
+        // TODO: 이미지 파일을 이동해야함 아니면 이미지 파일 통합해야함
         applyMemberRepository.deleteById(request.id());
 
         // 계정 승인 메일 발송
         try {
             String to = member.getEmail();
             String from = "cement.apply@gmail.com";
-            String subject = "[CEMENT] " + member.getUsername() + "님의 멤버 계정 신청 승인";
+            String subject = "[CEMENT] " + member.getName() + "님의 멤버 계정 신청 승인";
 
             StringBuilder body = new StringBuilder();
             body.append("<hr>");
             body.append("<h2>계정 정보</h2><br>");
             body.append("<h3>");
             body.append("이메일: " + member.getEmail());
-            body.append("<br>이름: " + member.getUsername());
+            body.append("<br>이름: " + member.getName());
             body.append("<br>전화번호: " + member.getPhone());
             body.append("<br>부서: " + member.getDepartment());
             body.append("<br>성별: " + applyMember.getGender());
