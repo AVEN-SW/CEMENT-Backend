@@ -25,7 +25,7 @@ public class MemberService {
 
     public String imgSave(MultipartFile imgFile) throws IOException {
         String saveFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
-        String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img/member";
+        String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img";
 
         final File file = new File(saveUrl, saveFileName);
         imgFile.transferTo(file);
@@ -91,5 +91,21 @@ public class MemberService {
 
     public void deleteMember(DeleteMemberRequest request) {
         memberRepository.deleteById(request.id());
+    }
+
+    public List<Member> memberDomainList() {
+        return memberRepository.findAll();
+    }
+
+    // 멤버 이미지 수정
+    public void imgModify(Long id, MultipartFile file) {
+        try {
+            Member member = memberRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("Not Found Member"));
+            member.setFile_name(imgSave(file));
+            memberRepository.save(member);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

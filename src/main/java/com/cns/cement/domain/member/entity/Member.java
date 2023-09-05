@@ -37,6 +37,7 @@ public class Member implements UserDetails {
     @Setter
     private String motto;
 
+    @Setter
     private String file_name;
 
     @Enumerated(EnumType.STRING)

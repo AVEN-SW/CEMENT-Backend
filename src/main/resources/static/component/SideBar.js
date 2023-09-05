@@ -17,7 +17,7 @@ class SideBar extends HTMLElement {
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="/profile_img/member/${file_name}" alt="">
+                  <img class="img-xs rounded-circle " src="/profile_img/${file_name}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">

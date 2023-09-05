@@ -153,7 +153,7 @@ class HeaderBar extends HTMLElement {
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="/profile_img/member/${file_name}" alt="">
+                    <img class="img-xs rounded-circle" src="/profile_img/${file_name}" alt="">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name" id="headerUsername"> ${username} </p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>

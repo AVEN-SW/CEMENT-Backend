@@ -90,7 +90,7 @@ public class ApplyMemberService {
         // 이미지 저장
         try {
             String saveFileName = UUID.randomUUID() + "_" + request.getProfile_image().getOriginalFilename();
-            String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img/apply_member";
+            String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img";
 
             final File file = new File(saveUrl, saveFileName);
             request.getProfile_image().transferTo(file);
@@ -144,9 +144,9 @@ public class ApplyMemberService {
         // Member 저장
         Member saveMember = memberRepository.save(member);
 
+
         // 지원자 정보에서 삭제
         // TODO: 지원자 데이터에서 승인, 삭제 기준으로 delete column 추가 예정
-        // TODO: 이미지 파일을 이동해야함 아니면 이미지 파일 통합해야함
         applyMemberRepository.deleteById(request.id());
 
         // 계정 승인 메일 발송

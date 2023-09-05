@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.print.attribute.standard.Media;
 
+// TODO: REST API 로 변경 해야함
+// TODO: API Spec. 논의는 프론트 팀과 협의 필요
 @RequiredArgsConstructor
 @Controller
 public class ApplyMemberController {
@@ -33,7 +35,6 @@ public class ApplyMemberController {
         // ApplyMember 도메인에서 PK만 받아서 정보 가져오기
         // Service에서 Member 도메인으로 Cascading 후에 부서 변경
         applyMemberService.acceptApply(request);
-        // TODO: /apply-member api 로 redirect 됐을때 현재 세션에 로그인 되어있는 멤버 정보가 넘어가는지 확인 필요
         return "redirect:/apply-member";
     }
 

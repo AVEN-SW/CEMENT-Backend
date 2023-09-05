@@ -2,7 +2,9 @@ package com.cns.cement.domain.member.controller;
 
 import com.cns.cement.domain.apply.entity.ApplyMember;
 import com.cns.cement.domain.apply.service.ApplyMemberService;
+import com.cns.cement.domain.member.dto.MemberResponse;
 import com.cns.cement.domain.member.entity.Member;
+import com.cns.cement.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -28,14 +30,20 @@ import java.util.concurrent.TimeUnit;
 public class MemberViewController {
 
     private final ApplyMemberService applyMemberService;
+    private final MemberService memberService;
 
+    @Deprecated
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
+        List<Member> memberList = memberService.memberDomainList();
+
         model.addAttribute("member", member);
+        model.addAttribute("memberList", memberList);
         return "index";
     }
 
+    @Deprecated
     @GetMapping("/member-list")
     public String memberList(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -43,6 +51,7 @@ public class MemberViewController {
         return "member-list";
     }
 
+    @Deprecated
     @GetMapping("/apply-member")
     public String applyMember(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -53,11 +62,13 @@ public class MemberViewController {
         return "apply-member";
     }
 
+    @Deprecated
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    @Deprecated
     @GetMapping("/register")
     public String register() {
         return "register";

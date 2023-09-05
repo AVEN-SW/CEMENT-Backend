@@ -37,9 +37,10 @@ public class MemberController {
     }
 
     // 이미지 조회
+    // TODO Reactor: Controller 영역에 Business Logic 이 많이 들어가 있음 Service 코드로 이동
     @GetMapping("/img")
     public ResponseEntity<Resource> imgSearch(@RequestParam("img") String img) throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/profile_img/apply_member/" + img);
+        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/profile_img/" + img);
         String contentType = Files.probeContentType(path);
 
         HttpHeaders headers = new HttpHeaders();
@@ -77,4 +78,12 @@ public class MemberController {
     public void deleteMember(@RequestBody DeleteMemberRequest request) {
         memberService.deleteMember(request);
     }
+
+    // 이미지 수정
+    @PutMapping("/img/{id}")
+    public void imgModify(@PathVariable("id")Long id,
+                          @RequestBody MultipartFile file) {
+        memberService.imgModify(id, file);
+    }
+
 }
