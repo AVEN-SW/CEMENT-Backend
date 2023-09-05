@@ -32,7 +32,6 @@ public class MemberViewController {
     private final ApplyMemberService applyMemberService;
     private final MemberService memberService;
 
-    @Deprecated
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -43,7 +42,6 @@ public class MemberViewController {
         return "index";
     }
 
-    @Deprecated
     @GetMapping("/member-list")
     public String memberList(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -51,7 +49,6 @@ public class MemberViewController {
         return "member-list";
     }
 
-    @Deprecated
     @GetMapping("/apply-member")
     public String applyMember(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -62,13 +59,11 @@ public class MemberViewController {
         return "apply-member";
     }
 
-    @Deprecated
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
-    @Deprecated
     @GetMapping("/register")
     public String register() {
         return "register";

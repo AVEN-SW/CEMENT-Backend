@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ApplyMember {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_member_id")
     private Long id;
 
