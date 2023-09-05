@@ -107,7 +107,7 @@
         if (selectedDepartment === "미정") {
           alert("부서를 설정해주세요.");
         } else {
-          fetch("http://localhost:8080/apply-member", {
+          fetch("http://cement.kro.kr:8080/apply-member", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -118,13 +118,13 @@
             }),
           }).then((response) => console.log(response));
           setTimeout(function() {
-            location.replace("http://localhost:8080/apply-member");
+            location.replace("http://cement.kro.kr:8080/apply-member");
           }, 1000);
         }
       }
 
       function refuseMember(memberId) {
-        fetch("http://localhost:8080/apply-member", {
+        fetch("http://cement.kro.kr:8080/apply-member", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -134,7 +134,7 @@
           }),
         }).then((response) => console.log(response));
         setTimeout(function() {
-          location.replace("http://localhost:8080/apply-member");
+          location.replace("http://cement.kro.kr:8080/apply-member");
         }, 1000);
       }
     </script>
