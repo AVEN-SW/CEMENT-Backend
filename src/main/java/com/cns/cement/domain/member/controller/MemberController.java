@@ -44,9 +44,16 @@ public class MemberController {
     }
 
     // 멤버 전체 검색
-    @GetMapping
+    @GetMapping("/list")
     public List<MemberResponse> memberList() {
         return memberService.memberList();
+    }
+
+    // Login Session Data Return
+    @GetMapping
+    public MemberSessionDataResponse sessionMemberData(Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        return MemberSessionDataResponse.of(member);
     }
 
     // 멤버 검색 필터링 (email, name, phone, department)

@@ -101,13 +101,7 @@ public class ApplyMemberService {
 
 
         ApplyMember applyMember = applyMemberRepository.save(request.toEntity());
-        return ApplyMemberResponse.builder()
-                .email(applyMember.getEmail())
-                .username(applyMember.getName())
-                .phone(applyMember.getPhone())
-                .gender(applyMember.getGender())
-                .age(applyMember.getAge())
-                .build();
+        return ApplyMemberResponse.of(applyMember);
     }
 
     // 이메일 중복 확인
@@ -128,8 +122,11 @@ public class ApplyMemberService {
         return true;
     }
 
-    public List<ApplyMember> applyMemberList() {
-        return applyMemberRepository.findAll();
+    public List<ApplyMemberResponse> applyMemberList() {
+        List<ApplyMember> applyMemberList = applyMemberRepository.findAll();
+        return applyMemberList.stream()
+                .map(ApplyMemberResponse::of)
+                .toList();
     }
 
     // 계정 승인
