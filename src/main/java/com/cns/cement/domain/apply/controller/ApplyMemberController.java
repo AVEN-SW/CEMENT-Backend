@@ -19,7 +19,7 @@ import java.util.List;
 // TODO: REST API 로 변경 해야함
 // TODO: API Spec. 논의는 프론트 팀과 협의 필요
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class ApplyMemberController {
 
     private final ApplyMemberService applyMemberService;
@@ -32,26 +32,21 @@ public class ApplyMemberController {
 
     // form으로 데이터를 묶어서 들어오는 경우 @RequestBody 어노테이션이 없어야 정상 작동함
     @PostMapping(value = "/register", consumes = {"multipart/form-data"})
-    public String applyMember(ApplyMemberRequest request) {
-
+    public void applyMember(ApplyMemberRequest request) {
         applyMemberService.addApplyMember(request);
-        return "redirect:/login";
     }
 
     // 계정 승인
     @PostMapping("/apply-member")
-    public String acceptApply(@RequestBody AcceptApplyRequest request) {
+    public void acceptApply(@RequestBody AcceptApplyRequest request) {
         // ApplyMember 도메인에서 PK만 받아서 정보 가져오기
-        // Service에서 Member 도메인으로 Cascading 후에 부서 변경
+        // Service에서 Member Domain으로 Cascading 후에 부서 변경
         applyMemberService.acceptApply(request);
-        return "redirect:/apply-member";
     }
 
     // 계정 거절
     @DeleteMapping("/apply-member")
-    public String refuseApply(@RequestBody RefuseApplyRequest request) {
+    public void refuseApply(@RequestBody RefuseApplyRequest request) {
         applyMemberService.refuseApply(request);
-
-        return "redirect:/apply-member";
     }
 }
