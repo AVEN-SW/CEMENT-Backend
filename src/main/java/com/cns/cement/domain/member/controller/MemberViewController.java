@@ -3,6 +3,7 @@ package com.cns.cement.domain.member.controller;
 import com.cns.cement.domain.apply.entity.ApplyMember;
 import com.cns.cement.domain.apply.service.ApplyMemberService;
 import com.cns.cement.domain.member.dto.MemberResponse;
+import com.cns.cement.domain.member.dto.MemberSessionDataResponse;
 import com.cns.cement.domain.member.entity.Member;
 import com.cns.cement.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,7 @@ import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -26,12 +24,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class MemberViewController {
 
     private final ApplyMemberService applyMemberService;
     private final MemberService memberService;
 
+    // Root Page -> 로그인 중인 멤버 데이터 보내주기
     @GetMapping("/")
     public String indexPage(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -42,6 +41,14 @@ public class MemberViewController {
         return "index";
     }
 
+    // Login Session Data Return
+    @GetMapping("/member")
+    public MemberSessionDataResponse sessionMemberData(Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        return MemberSessionDataResponse.of(member);
+    }
+
+    // 전체 멤버 리스트 반환해주기
     @GetMapping("/member-list")
     public String memberList(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -49,6 +56,7 @@ public class MemberViewController {
         return "member-list";
     }
 
+    // 계정 신청 멤버 리스트 반환해주기
     @GetMapping("/apply-member")
     public String applyMember(Model model, Authentication authentication) {
         Member member = (Member) authentication.getPrincipal();
@@ -59,14 +67,15 @@ public class MemberViewController {
         return "apply-member";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
+    // Login Page 반환이라 Deprecate
+//    @GetMapping("/login")
+//    public String login() {
+//        return "login";
+//    }
+//
+//    @GetMapping("/register")
+//    public String register() {
+//        return "register";
+//    }
 
 }

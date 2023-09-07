@@ -37,22 +37,10 @@ public class MemberController {
     }
 
     // 이미지 조회
-    // TODO Reactor: Controller 영역에 Business Logic 이 많이 들어가 있음 Service 코드로 이동
+    // Reactor: Controller 영역에 Business Logic 이 많이 들어가 있음 Service 코드로 이동
     @GetMapping("/img")
     public ResponseEntity<Resource> imgSearch(@RequestParam("img") String img) throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/profile_img/" + img);
-        String contentType = Files.probeContentType(path);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDisposition(
-                ContentDisposition.builder("attachment")
-                        .filename( img + ".jpg", StandardCharsets.UTF_8)
-                        .build());
-        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
-
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+        return memberService.imgSearch(img);
     }
 
     // 멤버 전체 검색
