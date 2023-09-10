@@ -32,6 +32,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - uses: actions/mysql-action@v1
+      with:
+        character set server: 'utf8'
+        mysql database: ${{ secrets.DATABASE_URL }}
+        mysql user: ${{ secrets.DATABASE_USERNAME }}
+        mysql password: ${{ secrets.DATABASE_PASSWORD }}
+
     - uses: actions/checkout@v2
 #    - run: touch ./src/main/resources/application.yml
     - run: rm ./src/main/resources/application.yml
