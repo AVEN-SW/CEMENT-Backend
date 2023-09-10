@@ -20,9 +20,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./
-      APPLICATION: ${{ secrets.APPLICATION }}
 
     steps:
     - uses: actions/checkout@v3
@@ -32,17 +29,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - uses: samin/mysql-action@v1
-      with:
-        character set server: 'utf8'
-        mysql database: ${{ secrets.DATABASE_URL }}
-        mysql user: ${{ secrets.DATABASE_USERNAME }}
-        mysql password: ${{ secrets.DATABASE_PASSWORD }}
-
-    - uses: actions/checkout@v2
-#    - run: touch ./src/main/resources/application.yml
-    - run: rm ./src/main/resources/application.yml
-    - run: echo "${{env.APPLICATION}}" > ./src/main/resources/application.yml
+#    - uses: actions/checkout@v2
+#    - run: rm ./src/main/resources/application.yml
+#    - run: echo "${{secrets.APPLICATION}}" > ./src/main/resources/application.yml
 
     - uses: actions/upload-artifact@v2
       with:
