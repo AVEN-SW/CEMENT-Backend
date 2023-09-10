@@ -6,15 +6,16 @@ spring:
     properties:
         format_sql: true
   datasource:
-    url: jdbc:mysql://${DATABASE_URL}:3306/cement
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:mysql://192.168.0.80:3306/cement
+    username: root
+    password: Skdlxmfhem3323!
+
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${SMTP_USERNAME}
-    password: ${SMTP_PASSWORD}
+    username: cement.apply@gmail.com
+    password: gswwqnjgnqzlhdid
     properties:
       mail:
         smtp:
