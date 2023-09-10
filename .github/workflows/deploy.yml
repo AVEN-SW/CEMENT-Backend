@@ -22,8 +22,25 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Stop old server (ignore error)
+        run: |
+          killall -9 java || true
+
+      - name: Remove old server in ~/soruce (ignore error)
+        run: |
+          rm -rf ~/source || true
+
+      - name: Copy new server to ~/soruce
+        run: |
+          mkdir -p ~/source
+          cp -R ./ ~/source
+
       - name: Build with Gradle
         run : ./gradlew clean build --exclude-task test
 
-      - name: SpringBoot Server Start
-        run: nohup java –jar ./build/libs/cement-0.0.1-SNAPSHOT.jar &
+      - name: Run new server (in background)
+        env:
+          RUNNER_TRACKING_ID: ""
+        run: |
+          cd ~/source
+          nohup java –jar ./build/libs/cement-0.0.1-SNAPSHOT.jar &
