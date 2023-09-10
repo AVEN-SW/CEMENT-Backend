@@ -32,7 +32,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - uses: actions/mysql-action@v1
+    - uses: samin/mysql-action@v1
       with:
         character set server: 'utf8'
         mysql database: ${{ secrets.DATABASE_URL }}
