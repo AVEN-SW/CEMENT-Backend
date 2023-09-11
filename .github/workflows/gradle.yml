@@ -53,4 +53,4 @@ jobs:
 
     - name: Run Spring Boot Application
       run: |
-        java -jar build/libs/cement-0.0.1-SNAPSHOT.jar
+        nohup java -jar build/libs/cement-0.0.1-SNAPSHOT.jar &
