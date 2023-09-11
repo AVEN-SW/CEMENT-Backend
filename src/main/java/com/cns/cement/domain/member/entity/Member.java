@@ -61,7 +61,7 @@ public class Member implements UserDetails {
         this.motto = motto;
         this.file_name = file_name;
         this.role = Authority.ROLE_MEMBER;
-        this.status = MemberStatus.Suspended;
+        this.status = MemberStatus.SUSPENDED;
     }
 
     @Builder

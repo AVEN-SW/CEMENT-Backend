@@ -33,6 +33,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    // image 저장 메서드 - 저장 위치 resources/static/profile_img
     public String imgSave(MultipartFile imgFile) throws IOException {
         String saveFileName = UUID.randomUUID() + "_" + imgFile.getOriginalFilename();
         String saveUrl = System.getProperty("user.dir") + "/src/main/resources/static/profile_img";
@@ -42,6 +43,7 @@ public class MemberService {
         return saveFileName;
     }
 
+    // 계정 신청 승인 후 멤버 등록
     public MemberResponse addMember(CreateMemberRequest request, MultipartFile file) throws IOException {
         String file_name = imgSave(file);
         request.setFile_name(file_name);
@@ -55,6 +57,7 @@ public class MemberService {
                                         saveMember.getFile_name());
     }
 
+    // search filter
     public List<MemberResponse> searchFilterMember(String filter, String value) {
         return switch (filter) {
             case "email" -> memberRepository.findByEmailContaining(value).stream()
@@ -73,12 +76,14 @@ public class MemberService {
         };
     }
 
+    // 가입된 Member List 반환
     public List<MemberResponse> memberList() {
         return memberRepository.findAll().stream()
                 .map(MemberResponse::of)
                 .toList();
     }
 
+    // Member 정보 수정
     public MemberResponse modifyMember(ModifyMemberRequest request) {
         Member findMember = memberRepository.findById(request.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Not Found MemeberId"));
@@ -99,14 +104,11 @@ public class MemberService {
         return MemberResponse.of(memberRepository.save(findMember));
     }
 
+    // Member 삭제
     public void deleteMember(DeleteMemberRequest request) {
         memberRepository.deleteById(request.id());
     }
-
-    public List<Member> memberDomainList() {
-        return memberRepository.findAll();
-    }
-
+    
     // 멤버 이미지 수정
     public void imgModify(Long id, MultipartFile file) {
         try {
