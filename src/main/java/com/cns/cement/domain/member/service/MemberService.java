@@ -108,7 +108,7 @@ public class MemberService {
     public void deleteMember(DeleteMemberRequest request) {
         memberRepository.deleteById(request.id());
     }
-    
+
     // 멤버 이미지 수정
     public void imgModify(Long id, MultipartFile file) {
         try {
