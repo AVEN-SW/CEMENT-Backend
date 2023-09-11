@@ -29,6 +29,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Pull Latest Changes
+      run: git pull
+
     - uses: actions/checkout@v2
     - run: rm ./src/main/resources/application.yml
     - run: echo "${{secrets.APPLICATION}}" > ./src/main/resources/application.yml
