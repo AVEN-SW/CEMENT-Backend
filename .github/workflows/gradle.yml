@@ -42,3 +42,12 @@ jobs:
       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
       with:
         arguments: build
+
+    - name: Stop Previous Spring Boot Application
+      run: |
+        pkill -f "java -jar build/libs/cement-0.0.1-SNAPSHOT.jar"
+        sleep 5  # 종료가 완료될 때까지 잠시 대기
+
+    - name: Run Spring Boot Application
+      run: |
+        nohup java -jar build/libs/cement-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
