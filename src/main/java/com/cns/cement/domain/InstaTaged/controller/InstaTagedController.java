@@ -14,12 +14,12 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+
 public class InstaTagedController {
 
     private final InstaTagedService instaTAgedService;
 
-    @GetMapping
+    @GetMapping("/insta")
     public List<InstaTaged> searchInsta(){
         return instaTAgedService.findiAllnstaTagedFeed();
 
