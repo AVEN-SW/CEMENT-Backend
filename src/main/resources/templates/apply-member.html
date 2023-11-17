@@ -4,6 +4,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>CEMENT</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
@@ -29,12 +32,11 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
 
-      <side-bar></side-bar>
-
+      <side-bar th:name="${member.name}" th:value="${member.file_name}" th:alt="${member.department}"></side-bar>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
-        <header-bar></header-bar>
+        <header-bar th:name="${member.name}" th:value="${member.file_name}"></header-bar>
 
         <!-- partial -->
         <div class="main-panel">
@@ -54,31 +56,31 @@
                       <th> 승인 여부 </th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                      <td class="py-1">
-                        <img src="/images/faces-clipart/pic-1.png" alt="image" />
-                      </td>
-                      <td> 테스트 계정 1 </td>
-                      <td> CNS </td>
-                      <td> test@email.com </td>
-                      <td>
-                        <button type="button" class="btn btn-outline-success btn-fw">승인</button>
-                        <button type="button" class="btn btn-outline-danger btn-fw">거절</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="py-1">
-                        <img src="/images/faces-clipart/pic-1.png" alt="image" />
-                      </td>
-                      <td> 테스트 계정 2 </td>
-                      <td> CEMENT </td>
-                      <td> test1@email.com </td>
-                      <td>
-                        <button type="button" class="btn btn-outline-success btn-fw">승인</button>
-                        <button type="button" class="btn btn-outline-danger btn-fw">거절</button>
-                      </td>
-                    </tr>
+                    <tbody th:each="applyMember: ${applyMembers}">
+                      <tr>
+                        <td class="py-1">
+                          <img th:src="@{/member/img(img=${applyMember.file_name})}" alt="image" />
+                        </td>
+                        <td th:text="${applyMember.name}"> Username </td>
+                        <td>
+                          <select class="form-control" th:id="${applyMember.id} + department">
+                            <option>[AVEN] Front-End</option>
+                            <option>[AVEN] Back-End</option>
+                            <option>[AVEN] Designer</option>
+                            <option>[AVEN] Project Manager</option>
+                            <option>[CEMENT] Floor Director</option>
+                            <option>[CEMENT] Content Planner</option>
+                            <option>[CEMENT] Camera Man</option>
+                            <option>[CEMENT] Adobe Mate</option>
+                            <option selected disabled>미정</option>
+                          </select>
+                        </td>
+                        <td th:text="${applyMember.email}"> test@email.com </td>
+                        <td>
+                          <button type="button" class="btn btn-outline-success btn-fw" th:onclick="'approveMember(' + ${applyMember.id} + ')'">승인</button>
+                          <button type="button" class="btn btn-outline-danger btn-fw" th:onclick="'refuseMember(' + ${applyMember.id} + ')'">거절</button>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -99,6 +101,43 @@
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="/vendors/js/vendor.bundle.base.js"></script>
+    <script>
+      function approveMember(memberId) {
+        var selectedDepartment = document.getElementById(memberId + "department").value;
+        if (selectedDepartment === "미정") {
+          alert("부서를 설정해주세요.");
+        } else {
+          fetch("http://cement.kro.kr:8080/apply-member", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: memberId,
+              department: selectedDepartment,
+            }),
+          }).then((response) => console.log(response));
+          setTimeout(function() {
+            location.replace("http://cement.kro.kr:8080/apply-member");
+          }, 1000);
+        }
+      }
+
+      function refuseMember(memberId) {
+        fetch("http://cement.kro.kr:8080/apply-member", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: memberId
+          }),
+        }).then((response) => console.log(response));
+        setTimeout(function() {
+          location.replace("http://cement.kro.kr:8080/apply-member");
+        }, 1000);
+      }
+    </script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <script src="/vendors/chart.js/Chart.min.js"></script>

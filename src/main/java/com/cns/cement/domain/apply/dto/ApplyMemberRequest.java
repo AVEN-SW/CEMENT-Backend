@@ -13,7 +13,6 @@ public class ApplyMemberRequest {
     private String username;
     @Setter
     private String password;
-    private String confirmPassword;
     private String phone;
     private String gender;
     private Integer age;

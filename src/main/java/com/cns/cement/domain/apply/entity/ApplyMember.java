@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class ApplyMember {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "apply_member_id")
     private Long id;
 
@@ -66,5 +66,10 @@ public class ApplyMember {
                                  Integer age,
                                  String file_name) {
         return new ApplyMember(email, name, password, phone, gender, age, file_name);
+    }
+
+
+    public Member toEntity() {
+        return Member.of(email, password, name, phone, null, null, file_name);
     }
 }

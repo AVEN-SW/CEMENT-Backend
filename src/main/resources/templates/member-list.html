@@ -4,6 +4,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>CEMENT</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
@@ -29,12 +32,11 @@
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
 
-      <side-bar></side-bar>
-
+      <side-bar th:name="${member.name}" th:value="${member.file_name}" th:alt="${member.department}"></side-bar>
       <!-- partial -->
       <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_navbar.html -->
-        <header-bar></header-bar>
+        <header-bar th:name="${member.name}" th:value="${member.file_name}"></header-bar>
 
         <!-- partial -->
         <div class="main-panel">

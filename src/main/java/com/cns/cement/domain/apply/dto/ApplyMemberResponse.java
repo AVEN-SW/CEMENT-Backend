@@ -1,17 +1,29 @@
 package com.cns.cement.domain.apply.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.cns.cement.domain.apply.entity.ApplyMember;
 
-@Getter
-@AllArgsConstructor
-@Builder
-public class ApplyMemberResponse {
-    private String email;
-    private String username;
-    private String phone;
-    private String gender;
-    private Integer age;
+import java.time.LocalDateTime;
+
+/**
+ * DTO for {@link com.cns.cement.domain.apply.entity.ApplyMember}
+ */
+public record ApplyMemberResponse(
+        String email,
+        String name,
+        String phone,
+        String gender,
+        Integer age,
+        String file_name,
+        LocalDateTime applyAt
+) {
+    public static ApplyMemberResponse of(ApplyMember applyMember) {
+        return new ApplyMemberResponse(
+                applyMember.getEmail(),
+                applyMember.getName(),
+                applyMember.getPhone(),
+                applyMember.getGender(),
+                applyMember.getAge(),
+                applyMember.getFile_name(),
+                applyMember.getApplyAt());
+    }
 }

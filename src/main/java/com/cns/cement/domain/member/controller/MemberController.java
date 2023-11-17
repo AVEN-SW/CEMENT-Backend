@@ -37,28 +37,23 @@ public class MemberController {
     }
 
     // 이미지 조회
+    // Reactor: Controller 영역에 Business Logic 이 많이 들어가 있음 Service 코드로 이동
     @GetMapping("/img")
-    public ResponseEntity<Resource> imgSearch(Authentication authentication) throws IOException {
-        Member member = (Member) authentication.getPrincipal();
-        Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/profile_img/" + "df55b025-dfbb-4c7d-a72d-a326b94bd796_00721279bfe3d8893fc011083b9eb1ca.jpg");
-        String contentType = Files.probeContentType(path);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentDisposition(
-                ContentDisposition.builder("attachment")
-                        .filename(member.getName() + ".jpg", StandardCharsets.UTF_8)
-                        .build());
-        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
-
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    public ResponseEntity<Resource> imgSearch(@RequestParam("img") String img) throws IOException {
+        return memberService.imgSearch(img);
     }
 
     // 멤버 전체 검색
-    @GetMapping
+    @GetMapping("/list")
     public List<MemberResponse> memberList() {
         return memberService.memberList();
+    }
+
+    // Login Session Data Return
+    @GetMapping
+    public MemberSessionDataResponse sessionMemberData(Authentication authentication) {
+        Member member = (Member) authentication.getPrincipal();
+        return MemberSessionDataResponse.of(member);
     }
 
     // 멤버 검색 필터링 (email, name, phone, department)
@@ -78,4 +73,12 @@ public class MemberController {
     public void deleteMember(@RequestBody DeleteMemberRequest request) {
         memberService.deleteMember(request);
     }
+
+    // 이미지 수정
+    @PutMapping("/img/{id}")
+    public void imgModify(@PathVariable("id")Long id,
+                          @RequestBody MultipartFile file) {
+        memberService.imgModify(id, file);
+    }
+
 }

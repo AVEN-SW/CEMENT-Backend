@@ -21,7 +21,7 @@ import java.util.List;
 public class Member implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -37,6 +37,7 @@ public class Member implements UserDetails {
     @Setter
     private String motto;
 
+    @Setter
     private String file_name;
 
     @Enumerated(EnumType.STRING)
@@ -60,7 +61,7 @@ public class Member implements UserDetails {
         this.motto = motto;
         this.file_name = file_name;
         this.role = Authority.ROLE_MEMBER;
-        this.status = MemberStatus.Suspended;
+        this.status = MemberStatus.SUSPENDED;
     }
 
     @Builder

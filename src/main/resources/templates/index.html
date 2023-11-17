@@ -4,6 +4,9 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
   <title>CEMENT</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="/vendors/mdi/css/materialdesignicons.min.css">
@@ -359,7 +362,7 @@
                             <th> 계정 상태 </th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody th:each="memberListData: ${memberList}">
                           <tr>
                             <td>
                               <div class="form-check form-check-muted m-0">
@@ -368,15 +371,16 @@
                                 </label>
                               </div>
                             </td>
-                            <td> 1 </td>
+                            <td th:text="'#' + ${memberListData.id}"> 1 </td>
                             <td>
-                              <img src="/images/faces/jth.jpg" alt="image" />
-                              <span class="pl-2">장태희</span>
+                              <img th:src="@{/member/img(img=${memberListData.file_name})}" alt="image" />
+                              <span class="pl-2" th:text="${memberListData.name}">장태희</span>
                             </td>
-                            <td> CNS </td>
-                            <td> kancth03@gmail.com </td>
-                            <td> 2023-08-25 </td>
+                            <td th:text="${memberListData.department}"> CNS </td>
+                            <td th:text="${memberListData.email}"> kancth03@gmail.com </td>
+                            <td th:text="${#temporals.format(memberListData.createAt, 'yyyy-MM-dd')}"> 2023-08-25 </td>
                             <td>
+                                <!-- TODO: IF Active일 경우 활동중 ELSE Suspend -> 정지된 계정 -->
                               <div class="badge badge-outline-success">활동중</div>
                             </td>
                           </tr>
