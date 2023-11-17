@@ -3,15 +3,16 @@ package com.cns.cement.domain.apply.controller;
 import com.cns.cement.domain.apply.dto.AcceptApplyRequest;
 import com.cns.cement.domain.apply.dto.ApplyMemberRequest;
 import com.cns.cement.domain.apply.dto.ApplyMemberResponse;
-import com.cns.cement.domain.apply.dto.RefuseApplyRequest;
-import com.cns.cement.domain.apply.entity.ApplyMember;
+
 import com.cns.cement.domain.apply.service.ApplyMemberService;
 import com.cns.cement.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.print.attribute.standard.Media;
 import java.util.List;
@@ -32,21 +33,8 @@ public class ApplyMemberController {
 
     // form으로 데이터를 묶어서 들어오는 경우 @RequestBody 어노테이션이 없어야 정상 작동함
     @PostMapping(value = "/register", consumes = {"multipart/form-data"})
-    public void applyMember(ApplyMemberRequest request) {
-        applyMemberService.addApplyMember(request);
-    }
+    public ApplyMemberResponse applyMember(ApplyMemberRequest request) {
 
-    // 계정 승인
-    @PostMapping("/apply-member")
-    public void acceptApply(@RequestBody AcceptApplyRequest request) {
-        // ApplyMember 도메인에서 PK만 받아서 정보 가져오기
-        // Service에서 Member Domain으로 Cascading 후에 부서 변경
-        applyMemberService.acceptApply(request);
-    }
-
-    // 계정 거절
-    @DeleteMapping("/apply-member")
-    public void refuseApply(@RequestBody RefuseApplyRequest request) {
-        applyMemberService.refuseApply(request);
+        return applyMemberService.addApplyMember(request);
     }
 }
